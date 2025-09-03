@@ -1,8 +1,9 @@
 "use client";
 import React, { useActionState, useEffect, useState } from "react";
 import { createUser, deleteUser, updateUser } from "../actions/UserActions";
+import Link from "next/link";
 
-type UsersProps = {
+export type UsersProps = {
   _id: string;
   name: string;
   email: string;
@@ -15,15 +16,16 @@ const UsersView = ({ initialUsers }: { initialUsers: UsersProps[] }) => {
   const [updateState, updateAction] = useActionState(updateUser, undefined);
 
   useEffect(() => {
-  if (updateState?.success && updateState?.updatedUser) {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user._id === updateState.updatedUser._id ? updateState.updatedUser : user
-      )
-    );
-  }
-}, [updateState]);
-
+    if (updateState?.success && updateState?.updatedUser) {
+      setUsers((prev) =>
+        prev.map((user) =>
+          user._id === updateState.updatedUser._id
+            ? updateState.updatedUser
+            : user
+        )
+      );
+    }
+  }, [updateState]);
 
   useEffect(() => {
     if (createState?.user) {
@@ -77,6 +79,7 @@ const UsersView = ({ initialUsers }: { initialUsers: UsersProps[] }) => {
                 }}
                 defaultValue={user._id}
               />
+             <Link href={`/users/${user._id}`}>Detals page</Link>
               <button className="bg-red-500 text-white px-3 py-1">
                 Delete
               </button>

@@ -1,13 +1,23 @@
 import { NextResponse } from "next/server";
 import { Users } from "../route";
 
+
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+  const user = await Users.findById(id);
+  return NextResponse.json(user);
+}
+
 export async function PUT(
   req: Request,
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
   const body = await req.json();
-  const updatedUser = Users.findByIdAndUpdate(id, body, {
+  const updatedUser = await Users.findByIdAndUpdate(id, body, {
     new: true,
     overwrite: true,
   });
@@ -19,6 +29,6 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const { id } = params;
-
-  await Users.findByIdAndDelete(id);
+  const deletedUser = await Users.findByIdAndDelete(id);
+  return NextResponse.json({ success: true, deletedId: deletedUser?._id });
 }
