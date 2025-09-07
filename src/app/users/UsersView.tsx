@@ -79,7 +79,7 @@ const UsersView = ({ initialUsers }: { initialUsers: UsersProps[] }) => {
                 }}
                 defaultValue={user._id}
               />
-             <Link href={`/users/${user._id}`}>Detals page</Link>
+             <Link href={`/users/${user._id}`}>Details page</Link>
               <button className="bg-red-500 text-white px-3 py-1">
                 Delete
               </button>
