@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useActionState, useEffect, useState } from "react";
 import { createUser, deleteUser, updateUser } from "../actions/UserActions";
 import Link from "next/link";
@@ -40,54 +41,74 @@ const UsersView = ({ initialUsers }: { initialUsers: UsersProps[] }) => {
   }, [deleteState]);
 
   return (
-    <div>
-      <form action={createAction}>
-        <h2>Create User</h2>
-        <input name="name" />
-        <input name="email" />
-
-        <button>Create</button>
-      </form>
+    <>
+      <section>
+        <form action={createAction}>
+          <h2>Create User</h2>
+          <label>Name : </label>
+          <input name="name" />
+          <div
+            style={{
+              padding: "10px",
+            }}
+          >
+            <label>Email : </label>
+            <input name="email" />
+          </div>
+          <button>Create</button>
+        </form>
+      </section>
 
       {users.map((user) => {
         return (
           <div key={user._id}>
             <h1>{user.name}</h1>
             <h1>{user.email}</h1>
-            <form
-              action={updateAction}
-              className="space-y-2 border p-4 rounded"
-            >
-              <h2>Update User</h2>
-              <input
-                name="_id"
-                defaultValue={user._id}
-                style={{ display: "none" }}
-              />
-              <input name="name" />
-              <input name="email" />
-
-              <button className="bg-blue-500 text-white px-3 py-1">
-                Update
-              </button>
-            </form>
-            <form action={deleteAction}>
-              <input
-                name="_id"
-                style={{
-                  display: "none",
-                }}
-                defaultValue={user._id}
-              />
-             <Link href={`/users/${user._id}`}>Details page</Link>
-              <button className="bg-red-500 text-white px-3 py-1">
-                Delete
-              </button>
-            </form>
+            <section>
+              <form
+                action={updateAction}
+                className="space-y-2 border p-4 rounded"
+              >
+                <h2>Update User</h2>
+                <input
+                  name="_id"
+                  defaultValue={user._id}
+                  style={{ display: "none" }}
+                />
+                <label>Name : </label>
+                <input name="name" />
+                <div
+                  style={{
+                    padding: "10px",
+                  }}
+                >
+                  <label>Email : </label>
+                  <input name="email" />
+                </div>
+                <button className="bg-blue-500 text-white px-3 py-1">
+                  Update
+                </button>
+              </form>
+            </section>
+            <section>
+              <form action={deleteAction}>
+                <input
+                  name="_id"
+                  style={{
+                    display: "none",
+                  }}
+                  defaultValue={user._id}
+                />
+                <Link href={`/users/${user._id}`}>Details page</Link>
+                <button className="bg-red-500 text-white px-3 py-1">
+                  Delete
+                </button>
+              </form>
+            </section>
           </div>
         );
       })}
-    </div>
+    </>
   );
 };
 
