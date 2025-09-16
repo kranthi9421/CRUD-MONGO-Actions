@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { Users } from "../route";
 
 
+
 export async function GET(
   req: Request,
   { params }: { params: { id: string } }
@@ -10,6 +11,11 @@ export async function GET(
   const user = await Users.findById(id);
   return NextResponse.json(user);
 }
+
+
+
+
+
 
 export async function PUT(
   req: Request,
@@ -23,6 +29,30 @@ export async function PUT(
   });
   return NextResponse.json(updatedUser);
 }
+
+
+
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  const { id } = params;
+  const body = await req.json();
+
+  const updatedUser = await Users.findByIdAndUpdate(id, body, {
+    new: true,       // Return the updated document
+    overwrite: false // Only update provided fields
+  });
+
+  return NextResponse.json(updatedUser);
+}
+
+
+
+
+
+
 
 export async function DELETE(
   req: Request,
